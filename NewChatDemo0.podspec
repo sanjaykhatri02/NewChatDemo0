@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NewChatDemo0'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'A ChatTestDemo App That is Demo. that is enough for now'
 
 # This description is used to generate tags and improve search results.
@@ -45,6 +45,7 @@ Pod::Spec.new do |s|
      s.dependency 'Firebase/Messaging'
      s.dependency 'Kingfisher'
      s.dependency 'SVProgressHUD'
+     s.dependency 'Cosmos'
   
   # s.resource_bundles = {
   #   'NewChatDemo0' => ['NewChatDemo0/Assets/*.png']
