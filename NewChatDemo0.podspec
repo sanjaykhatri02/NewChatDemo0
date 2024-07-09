@@ -32,7 +32,19 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
 #  s.source_files = 'NewChatDemo0/**/*'
-   s.source_files = 'NewChatDemo0/Classes/**/*.{swift,h,m}'
+   s.source_files = 'Classes/**/*.{swift,h,m}'
+   
+   s.frameworks = ['UIKit', 'Foundation', 'QuickLook', 'Photos', 'MobileCoreServices']
+     
+     s.dependency 'Alamofire', '~> 5.9.0'
+     s.dependency 'SwiftyJSON'
+     s.dependency 'FMDB'
+     s.dependency 'SwiftSignalRClient'
+     s.dependency 'IQKeyboardManager'
+     s.dependency 'Firebase/Core'
+     s.dependency 'Firebase/Messaging'
+     s.dependency 'Kingfisher'
+     s.dependency 'SVProgressHUD'
   
   # s.resource_bundles = {
   #   'NewChatDemo0' => ['NewChatDemo0/Assets/*.png']
