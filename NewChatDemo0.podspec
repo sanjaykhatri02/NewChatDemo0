@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NewChatDemo0'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'A ChatTestDemo App That is Demo. that is enough for now'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'NewChatDemo0/Classes/**/*'
+#  s.source_files = 'NewChatDemo0/**/*'
+   s.source_files = 'NewChatDemo0/Classes/**/*.{swift,h,m}'
   
   # s.resource_bundles = {
   #   'NewChatDemo0' => ['NewChatDemo0/Assets/*.png']
