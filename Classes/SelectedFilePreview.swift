@@ -29,7 +29,7 @@ class SelectedFilePreview : UIViewController, UITextViewDelegate{
         
         dismiss(animated: true, completion: {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                SwiftEventBus.post("CalledAfterSelectedPreviewUnSend")
+                //SwiftEventBus.post("CalledAfterSelectedPreviewUnSend")
             }
         })
     }
@@ -40,7 +40,7 @@ class SelectedFilePreview : UIViewController, UITextViewDelegate{
                 // save message into local storage
                 self.delegate.setUpdatedSelectedFiles(filesNames: self.filesNames)
                 UserDefaults.standard.set(self.tvMessage.text!, forKey: "messageStr")
-                SwiftEventBus.post("CalledAfterSelectedPreviewSend")
+                //SwiftEventBus.post("CalledAfterSelectedPreviewSend")
                 
                 
             }

@@ -12,12 +12,13 @@ import  SwiftSignalRClient
 import Photos
 import MobileCoreServices
 import Alamofire
-import ImageLoader
+//import ImageLoader
+
 //import SwiftEventBus
 import QuickLook
 //import SwiftGifOrigin
 import Kingfisher
-import BSImagePicker
+//import BSImagePicker
 
 
 var conversationByZeroId : [ConversationsByUUID]!
@@ -207,7 +208,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewWillAppear(_ animated: Bool) {
         CustomUserDefaultChat.sheard.saveConversationCountFromServer(count: "0")
-        SwiftEventBus.post("refreshChatBadgeCount")
+        //SwiftEventBus.post("refreshChatBadgeCount")
     }
     
     @IBAction func topicMenu(_ sender: Any) {
@@ -251,6 +252,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func showMultipleImagePicker(){
+        /*
         self.isFromCamera = false
         filesNames.removeAll()
         let imagePicker = ImagePickerController()
@@ -351,6 +353,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let finish = Date()
             print(finish.timeIntervalSince(start))
         })
+        */
     }
     
     func updateReconnection(){
@@ -1287,7 +1290,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     }else{
 //                                        aCell.ivImage.setImage(with: self.conversationArrayList[indexPath.row].files![0].url ?? "", placeHolder: UIImage(named: "placeholder"))
                                         DispatchQueue.main.async {
-                                            aCell.ivImage.load.request(with: self.conversationArrayList[indexPath.row].files![0].url ?? "")
+                                            //aCell.ivImage.load.request(with: self.conversationArrayList[indexPath.row].files![0].url ?? "")
                                         }
                                     }
                                     aCell.lblTime.text = self.utcToLocal(dateStr: self.conversationArrayList[indexPath.row].timestamp ?? "")
@@ -1580,7 +1583,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                                aCell.ivImageView.setImage(with: self.conversationArrayList[indexPath.row].files![0].url ?? "", placeHolder: UIImage(named: "placeholder"))
                                 // Load image asynchronously
                                 DispatchQueue.main.async {
-                                    aCell.ivImageView.load.request(with: self.conversationArrayList[indexPath.row].files![0].url ?? "")
+                                    //aCell.ivImageView.load.request(with: self.conversationArrayList[indexPath.row].files![0].url ?? "")
                                 }
                                 
                                 aCell.lbl_time.text = self.utcToLocal(dateStr: self.conversationArrayList[indexPath.row].timestamp ?? "")
@@ -1906,73 +1909,75 @@ extension ChatViewController {
     
     
     func intiEventListner(){
-        SwiftEventBus.onMainThread(self, name: "CalledAfterSelectedPreviewSend") { notification in
-            if !self.fileUploadArrayList.isEmpty{
-                for i in 0 ..< self.filesNames.count{
-                    self.indexCurrent = i
-                    var messageStr = UserDefaults.standard.value(forKey: "messageStr") as? String ?? ""
-                    var sendMessageModel : NewChatMessage = NewChatMessage();
-                    sendMessageModel.agentId = self.agentId;
-                    sendMessageModel.tempChatId = self.filesNames[i].tempChatId!
-                    sendMessageModel.conversationUId = self.conversationUuID
-                    sendMessageModel.connectionId = CustomUserDefaultChat.sheard.getsaveConnectionId()
-                    sendMessageModel.customerId = self.cusId ;
-                    sendMessageModel.contactNo = self.customerMobileNumber;
-                    sendMessageModel.name = self.customerName ;
-                    sendMessageModel.cnic = self.customerCNIC;
-                    sendMessageModel.emailaddress = self.customerEmail;
-                    sendMessageModel.message = self.filesNames[i].fileName ?? ""
-                    sendMessageModel.documentOrignalname = self.filesNames[i].fileName ?? ""
-                    sendMessageModel.documentName = self.filesNames[i].fileName ?? ""
-                    sendMessageModel.documentType = self.filesNames[i].mimeType
-                    sendMessageModel.fileUri = self.filesNames[i].url ?? ""
-                    sendMessageModel.source = "Mobile_IOS" ;
-                    sendMessageModel.isFromWidget = true ;
-                    sendMessageModel.type = "file";
-                    sendMessageModel.channelid = self.channelId;
-                    sendMessageModel.notifyMessage = "";
-                    sendMessageModel.mobileToken = self.fcmtoken;
-                    sendMessageModel.caption = self.filesNames[i].message ?? ""
-                    self.fileUploadArrayList[i].caption = self.filesNames[i].message ?? ""
-                    
-                    //                sendMessageModel.createdOn = self.getCurrentDateAndTime()
-                    sendMessageModel.callerAppType = Int64(UtilsClassChat.sheard.callerAppType)
-                    self.addTempItemToList(sendMessageModel: sendMessageModel, isAddedToDB: true)
-                }
-                if(Reachability.isConnectedToNetwork()){
-                    self.swapCaptionData()
-                        //self.sendAopData(aopRequest: aopdata)
-                    //self.uploadFilesToServer(conversationUUId: self.conversationUuID, multipartList: self.fileUploadArrayList,tempChatIdStr: self.filesNames[0].tempChatId!)
-                }else{
-                    for i in 0 ..< self.filesNames.count{
-                        if let position = self.conversationArrayList.firstIndex(where: {$0.tempChatId == self.filesNames[i].tempChatId ?? ""}){
-                            print(position)
-                            self.conversationArrayList[position].isReceived = false
-                            self.conversationArrayList[position].isFailed = true
-                            self.conversationArrayList[position].isShowLocalFiles = true
-                            self.dbChatObj.updateFailedStatus(tempChatId: self.conversationArrayList[position].tempChatId ?? "", isFailed: self.conversationArrayList[position].isFailed ?? false)
-                            //self.dbChatObj.saveChatIntoData(isUpdateById: false, pageNumber: self.pageNumber, conversation: self.conversationArrayList[position])
-                            self.chatTableView.reloadRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
-                        }
-                    }
-                    self.fileUploadArrayList.removeAll()
-                    self.filesNames.removeAll()
-                }
-                
         
-                            
-            }
-
-        }
+//        SwiftEventBus.onMainThread(self, name: "CalledAfterSelectedPreviewSend") { notification in
+//            if !self.fileUploadArrayList.isEmpty{
+//                for i in 0 ..< self.filesNames.count{
+//                    self.indexCurrent = i
+//                    var messageStr = UserDefaults.standard.value(forKey: "messageStr") as? String ?? ""
+//                    var sendMessageModel : NewChatMessage = NewChatMessage();
+//                    sendMessageModel.agentId = self.agentId;
+//                    sendMessageModel.tempChatId = self.filesNames[i].tempChatId!
+//                    sendMessageModel.conversationUId = self.conversationUuID
+//                    sendMessageModel.connectionId = CustomUserDefaultChat.sheard.getsaveConnectionId()
+//                    sendMessageModel.customerId = self.cusId ;
+//                    sendMessageModel.contactNo = self.customerMobileNumber;
+//                    sendMessageModel.name = self.customerName ;
+//                    sendMessageModel.cnic = self.customerCNIC;
+//                    sendMessageModel.emailaddress = self.customerEmail;
+//                    sendMessageModel.message = self.filesNames[i].fileName ?? ""
+//                    sendMessageModel.documentOrignalname = self.filesNames[i].fileName ?? ""
+//                    sendMessageModel.documentName = self.filesNames[i].fileName ?? ""
+//                    sendMessageModel.documentType = self.filesNames[i].mimeType
+//                    sendMessageModel.fileUri = self.filesNames[i].url ?? ""
+//                    sendMessageModel.source = "Mobile_IOS" ;
+//                    sendMessageModel.isFromWidget = true ;
+//                    sendMessageModel.type = "file";
+//                    sendMessageModel.channelid = self.channelId;
+//                    sendMessageModel.notifyMessage = "";
+//                    sendMessageModel.mobileToken = self.fcmtoken;
+//                    sendMessageModel.caption = self.filesNames[i].message ?? ""
+//                    self.fileUploadArrayList[i].caption = self.filesNames[i].message ?? ""
+//                    
+//                    //                sendMessageModel.createdOn = self.getCurrentDateAndTime()
+//                    sendMessageModel.callerAppType = Int64(UtilsClassChat.sheard.callerAppType)
+//                    self.addTempItemToList(sendMessageModel: sendMessageModel, isAddedToDB: true)
+//                }
+//                if(Reachability.isConnectedToNetwork()){
+//                    self.swapCaptionData()
+//                        //self.sendAopData(aopRequest: aopdata)
+//                    //self.uploadFilesToServer(conversationUUId: self.conversationUuID, multipartList: self.fileUploadArrayList,tempChatIdStr: self.filesNames[0].tempChatId!)
+//                }else{
+//                    for i in 0 ..< self.filesNames.count{
+//                        if let position = self.conversationArrayList.firstIndex(where: {$0.tempChatId == self.filesNames[i].tempChatId ?? ""}){
+//                            print(position)
+//                            self.conversationArrayList[position].isReceived = false
+//                            self.conversationArrayList[position].isFailed = true
+//                            self.conversationArrayList[position].isShowLocalFiles = true
+//                            self.dbChatObj.updateFailedStatus(tempChatId: self.conversationArrayList[position].tempChatId ?? "", isFailed: self.conversationArrayList[position].isFailed ?? false)
+//                            //self.dbChatObj.saveChatIntoData(isUpdateById: false, pageNumber: self.pageNumber, conversation: self.conversationArrayList[position])
+//                            self.chatTableView.reloadRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
+//                        }
+//                    }
+//                    self.fileUploadArrayList.removeAll()
+//                    self.filesNames.removeAll()
+//                }
+//                
+//        
+//                            
+//            }
+//            
+//
+//        }
         
-        SwiftEventBus.onMainThread(self, name: "CalledAfterSelectedPreviewUnSend") { notification in
-            if !self.fileUploadArrayList.isEmpty{
-                self.fileUploadArrayList.removeAll()
-            }
-            if !self.filesNames.isEmpty{
-                self.filesNames.removeAll()
-            }
-        }
+//        SwiftEventBus.onMainThread(self, name: "CalledAfterSelectedPreviewUnSend") { notification in
+//            if !self.fileUploadArrayList.isEmpty{
+//                self.fileUploadArrayList.removeAll()
+//            }
+//            if !self.filesNames.isEmpty{
+//                self.filesNames.removeAll()
+//            }
+//        }
     }
     
     func connectSignalR(resultToken : String ){
